@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import SelectBox from "./partials/SelectBox";
 import SelectSearch from "react-select-search";
 import { cityList } from "../constanta";
+import Select from "react-select";
+import axios from "axios";
 
 import "react-select-search/style.css";
 
@@ -145,18 +147,53 @@ const provinceList = [
 ];
 
 const Form = () => {
-    const [provinces, setProvinces] = useState(provinceList);
-    const [province, setProvince] = useState(null);
+    const [provinceSelect, setProvinceSelect] = useState(
+        provinceList.map(function (item) {
+            return {
+                label: `${item.name}`,
+                value: item.value,
+            };
+        })
+    );
     const [cities, setCities] = useState([]);
+    const [costumes, setCostumes] = useState([]);
+    const [province, setProvince] = useState(null);
+    const [costume, setCostume] = useState(null);
+    const [city, setCity] = useState(null);
 
     useEffect(() => {
-        const temp = cityList.filter((city) => city.province_id == province);
+        const getCostumes = async () => {
+            try {
+                const response = await axios.get(
+                    "http://127.0.0.1:5000/costume"
+                );
+                setCostumes(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        getCostumes();
+    }, []);
+
+    useEffect(() => {
+        const temp = cityList.filter(
+            (city) => city.province_id == province?.value
+        );
         setCities(temp);
-        console.log(temp);
+        setCity(null);
     }, [province]);
 
     const selectProvince = (province) => {
         setProvince(province);
+    };
+
+    const selectCity = (city) => {
+        setCity(city);
+    };
+
+    const selectCostume = (costume) => {
+        setCostume(costume);
     };
 
     return (
@@ -207,7 +244,7 @@ const Form = () => {
                 <span className="block font-medium mb-3">
                     Masukan domisili anda
                 </span>
-                <div className="grid gap-2">
+                <div className="grid sm:grid-cols-2 gap-2">
                     <div className="field">
                         <label
                             htmlFor="province"
@@ -215,29 +252,23 @@ const Form = () => {
                         >
                             Provinsi
                         </label>
-                        <SelectSearch
-                            options={provinces}
-                            name="province"
-                            value={province}
-                            placeholder="Pilih Provinsi"
-                            search={true}
-                            id="province"
+                        <Select
+                            options={provinceSelect}
                             onChange={(e) => selectProvince(e)}
+                            value={province}
                         />
                     </div>
                     <div className="field">
                         <label
-                            htmlFor="city"
+                            htmlFor="Kota"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
                             Kota
                         </label>
-                        <SelectSearch
+                        <Select
                             options={cities}
-                            name="city"
-                            placeholder="Pilih Kota"
-                            search={true}
-                            id="city"
+                            onChange={(e) => selectCity(e)}
+                            value={city}
                         />
                     </div>
                 </div>
@@ -246,16 +277,18 @@ const Form = () => {
                 <span className="block font-medium mb-3">
                     Pilih kostum yang ingin dicari
                 </span>
-                <div className="grid xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4">
-                    <div className="field">
-                        <SelectSearch
-                            options={[]}
-                            name="costume"
-                            value={""}
-                            placeholder="Pilih Kostum"
-                            search={true}
-                            id="costume"
+                <div className="grid sm:grid-cols-7 gap-4">
+                    <div className="field sm:col-span-6">
+                        <Select
+                            options={costumes}
+                            onChange={(e) => selectCostume(e)}
+                            value={costume}
                         />
+                    </div>
+                    <div className="field sm:col-span-1">
+                        <button className="sm:h-full w-full py-2 rounded bg-blue-700 hover:bg-blue-500 text-white shadow">
+                            Cari
+                        </button>
                     </div>
                 </div>
             </div>
