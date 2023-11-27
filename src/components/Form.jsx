@@ -227,7 +227,7 @@ const Form = () => {
     return (
         <>
             <form
-                className="max-w-[80%] py-20 min-h-screen mx-auto mt-4"
+                className="max-w-[80%] pt-20 min-h-screen mx-auto mt-4"
                 id="form"
             >
                 <div className="mb-2">
