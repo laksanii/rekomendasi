@@ -4,6 +4,11 @@ import SelectSearch from "react-select-search";
 import { cityList } from "../constanta";
 import Select from "react-select";
 import axios from "axios";
+import {
+    FLASK_API_URL,
+    FLASK_GET_COSTUME_URL,
+    FLASK_PROCESS_URL,
+} from "../API";
 
 import "react-select-search/style.css";
 
@@ -167,7 +172,7 @@ const Form = () => {
         const getCostumes = async () => {
             try {
                 const response = await axios.get(
-                    "http://127.0.0.1:5000/costume"
+                    `${FLASK_API_URL}${FLASK_GET_COSTUME_URL}`
                 );
                 setCostumes(response.data);
             } catch (error) {
@@ -207,7 +212,7 @@ const Form = () => {
 
         try {
             const response = await axios.post(
-                "http://127.0.0.1:5000/process",
+                `${FLASK_API_URL}${FLASK_PROCESS_URL}`,
                 formData
             );
             setResult(response.data);
