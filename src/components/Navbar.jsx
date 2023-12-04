@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-scroll";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const navigation = useNavigate();
 
     const toggleNavbar = () => {
         console.log("clicked");
@@ -65,19 +67,6 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link
-                                className="cursor-pointer block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
-                                to="section2"
-                                activeClass="active"
-                                spy={true}
-                                smooth={true}
-                                offset={0}
-                                duration={500}
-                            >
-                                Cari
-                            </Link>
-                        </li>
-                        <li>
                             <a
                                 href="https://forms.gle/DNV5J1t9xK6umpkT9"
                                 target="_blank"
@@ -87,12 +76,25 @@ const Navbar = () => {
                             </a>
                         </li>
                         <li>
-                            <a
-                                href="#"
+                            <Link
+                                className="cursor-pointer block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700"
+                                to="section3"
+                                activeClass="active"
+                                spy={true}
+                                smooth={true}
+                                offset={0}
+                                duration={500}
+                            >
+                                About
+                            </Link>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => navigation("tambah-data")}
                                 className="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                             >
                                 Tambah Data
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>

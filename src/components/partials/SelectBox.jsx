@@ -1,4 +1,9 @@
-const SelectBox = ({ label, id, name }) => {
+const SelectBox = ({
+    label,
+    id,
+    name,
+    options = ["sangat penting", "penting", "cukup penting", "tidak penting"],
+}) => {
     return (
         <div className="field">
             <label
@@ -12,10 +17,13 @@ const SelectBox = ({ label, id, name }) => {
                 name={name}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-                <option value={"sangat penting"}>Sangat Penting</option>
-                <option value={"penting"}>Penting</option>
-                <option value={"cukup penting"}>Cukup Penting</option>
-                <option value={"tidak penting"}>Tidak Penting</option>
+                {options.map((item, index) => {
+                    return (
+                        <option key={index} value={item} className="capitalize">
+                            {item}
+                        </option>
+                    );
+                })}
             </select>
         </div>
     );

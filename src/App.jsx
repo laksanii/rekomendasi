@@ -3,6 +3,8 @@ import Jumbotron from "./components/Jumbotron";
 import Navbar from "./components/Navbar";
 import Form from "./components/Form";
 import Detail from "./components/Detail";
+import TambahData from "./components/Tambah";
+import About from "./components/About";
 
 function App() {
     return (
@@ -20,11 +22,11 @@ function App() {
                                 <Navbar />
                                 <Jumbotron />
                                 <Form />
+                                <About />
                             </>
                         }
                     />
-                    {/* <Jumbotron />
-                    <Form /> */}
+                    <Route path="tambah-data" element={<TambahData />} />
                 </Routes>
             </BrowserRouter>
         </>

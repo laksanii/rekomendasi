@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal, Button } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import SelectBox from "./partials/SelectBox";
 import SelectSearch from "react-select-search";
 import { cityList } from "../constanta";
@@ -11,8 +11,9 @@ import {
     FLASK_GET_COSTUME_URL,
     FLASK_PROCESS_URL,
 } from "../API";
+import Chart from "react-apexcharts";
 
-import "react-select-search/style.css";
+import assets1 from "../assets/assets1.png";
 
 const provinceList = [
     {
@@ -162,6 +163,9 @@ const Form = () => {
             };
         })
     );
+    const [options, setOptions] = useState(null);
+
+    const [series, setSeries] = useState(null);
     const [cities, setCities] = useState([]);
     const [costumes, setCostumes] = useState([]);
     const [province, setProvince] = useState(null);
@@ -169,7 +173,7 @@ const Form = () => {
     const [city, setCity] = useState(null);
     const [result, setResult] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [openModal, setOpenModal] = useState(true);
+    const [openModal, setOpenModal] = useState(false);
     const [modalName, setModalName] = useState("");
     const [modalDom, setModalDom] = useState("");
     const [modalFollowers, setModalFollowers] = useState(0);
@@ -211,13 +215,13 @@ const Form = () => {
     };
 
     const handleSubmit = async () => {
-        setIsLoading(true);
-        const formEl = document.querySelector("#form");
-        const formData = new FormData(formEl);
-        formData.append("costume_id", costume.value);
-        formData.append("city_id", city.value);
-
         try {
+            setIsLoading(true);
+            const formEl = document.querySelector("#form");
+            const formData = new FormData(formEl);
+            formData.append("costume_id", costume.value);
+            formData.append("city_id", city.value);
+
             const response = await axios.post(
                 `${FLASK_API_URL}${FLASK_PROCESS_URL}`,
                 formData
@@ -234,6 +238,27 @@ const Form = () => {
                     merged.push({ ...obj1, ...matching });
                 }
             });
+
+            const myseries = response.data.rank.map((item) => item.V);
+            const myoptions = response.data.rank.map(
+                (item) => item["jasa sewa"]
+            );
+            const tempOption = {
+                chart: {
+                    id: "line-chart",
+                },
+                xaxis: {
+                    categories: myoptions,
+                },
+            };
+            const tempSeries = [
+                {
+                    name: "Preference",
+                    data: myseries,
+                },
+            ];
+            setSeries(tempSeries);
+            setOptions(tempOption);
 
             setResult(merged.sort((a, b) => b.V - a.V));
             console.log(merged.sort((a, b) => b.V - a.V));
@@ -260,9 +285,22 @@ const Form = () => {
         }
     };
 
+    const getYears = () => {
+        const start = 2023;
+        const currentYear = new Date().getFullYear();
+        const years = [];
+        for (let i = start; i <= currentYear; i++) {
+            years.push(i);
+        }
+        years.push("data terbaru");
+
+        return years;
+    };
+
     const card = () => {
         return (
-            <div className="mx-auto w-full max-w-sm pb-10 bg-white dark:bg-gray-800 dark:border-gray-700">
+            <div className="pb-10 dark:bg-gray-800 dark:border-gray-700">
+                <img className="absolute right-0 h-40" src={assets1} alt="" />
                 <div className="flex flex-col items-center">
                     <h5 className="mb-1 text-2xl font-medium text-gray-900 dark:text-white">
                         {modalName}
@@ -412,7 +450,7 @@ const Form = () => {
                         <span className="block font-medium mb-3">
                             Pilih bobot kepentingan setiap kriteria
                         </span>
-                        <div className="grid xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3  gap-4">
+                        <div className="grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2  gap-4">
                             <SelectBox
                                 label={"Harga Sewa"}
                                 id={"harga_sewa"}
@@ -447,6 +485,12 @@ const Form = () => {
                                 label={"Followers Instagram"}
                                 id={"followers_instagram"}
                                 name={"followers_instagram"}
+                            />
+                            <SelectBox
+                                label={"Riwayat Data"}
+                                id={"riwayat_data"}
+                                name={"riwayat_data"}
+                                options={getYears().reverse()}
                             />
                         </div>
                     </div>
@@ -493,6 +537,20 @@ const Form = () => {
                                     options={costumes}
                                     onChange={(e) => selectCostume(e)}
                                     value={costume}
+                                    formatOptionLabel={(item) => (
+                                        <div className="flex h-10 items-center gap-3">
+                                            <span>{item.label}</span>
+                                            {item.img ? (
+                                                <img
+                                                    src={item.img}
+                                                    alt=""
+                                                    className="object-contain h-full"
+                                                />
+                                            ) : (
+                                                ""
+                                            )}
+                                        </div>
+                                    )}
                                 />
                             </div>
                             <div className="field sm:col-span-1">
@@ -648,6 +706,14 @@ const Form = () => {
                                     })}
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="mt-4">
+                            <Chart
+                                options={options}
+                                series={series}
+                                type="line"
+                                width="100%"
+                            />
                         </div>
                     </div>
                 ) : (
