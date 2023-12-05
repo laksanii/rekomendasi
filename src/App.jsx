@@ -5,6 +5,7 @@ import Form from "./components/Form";
 import Detail from "./components/Detail";
 import TambahData from "./components/Tambah";
 import About from "./components/About";
+import Update from "./components/Update";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                         }
                     />
                     <Route path="tambah-data" element={<TambahData />} />
+                    <Route path="update-data" element={<Update />} />
                 </Routes>
             </BrowserRouter>
         </>

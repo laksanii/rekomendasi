@@ -8,3 +8,4 @@ export const FLASK_DETAIL_URL = "/detail";
 export const FLASK_JASA_SEWA_URL = "/jasa-sewa";
 export const FLASK_BRAND_URL = "/brand";
 export const FLASK_JASA_SEWA_COSTUME_URL = "/jasa-sewa-costume";
+export const FLASK_COSTUME_BY_JASA_SEWA_URL = "/costumes-by-jasasewa";

@@ -2505,3 +2505,142 @@ export const cityList = [
         label: "Kota Yogyakarta",
     },
 ];
+
+export const provinceList = [
+    {
+        value: "1",
+        label: "Bali",
+    },
+    {
+        value: "2",
+        label: "Bangka Belitung",
+    },
+    {
+        value: "3",
+        label: "Banten",
+    },
+    {
+        value: "4",
+        label: "Bengkulu",
+    },
+    {
+        value: "5",
+        label: "DI Yogyakarta",
+    },
+    {
+        value: "6",
+        label: "DKI Jakarta",
+    },
+    {
+        value: "7",
+        label: "Gorontalo",
+    },
+    {
+        value: "8",
+        label: "Jambi",
+    },
+    {
+        value: "9",
+        label: "Jawa Barat",
+    },
+    {
+        value: "10",
+        label: "Jawa Tengah",
+    },
+    {
+        value: "11",
+        label: "Jawa Timur",
+    },
+    {
+        value: "12",
+        label: "Kalimantan Barat",
+    },
+    {
+        value: "13",
+        label: "Kalimantan Selatan",
+    },
+    {
+        value: "14",
+        label: "Kalimantan Tengah",
+    },
+    {
+        value: "15",
+        label: "Kalimantan Timur",
+    },
+    {
+        value: "16",
+        label: "Kalimantan Utara",
+    },
+    {
+        value: "17",
+        label: "Kepulauan Riau",
+    },
+    {
+        value: "18",
+        label: "Lampung",
+    },
+    {
+        value: "19",
+        label: "Maluku",
+    },
+    {
+        value: "20",
+        label: "Maluku Utara",
+    },
+    {
+        value: "21",
+        label: "Nanggroe Aceh Darussalam (NAD)",
+    },
+    {
+        value: "22",
+        label: "Nusa Tenggara Barat (NTB)",
+    },
+    {
+        value: "23",
+        label: "Nusa Tenggara Timur (NTT)",
+    },
+    {
+        value: "24",
+        label: "Papua",
+    },
+    {
+        value: "25",
+        label: "Papua Barat",
+    },
+    {
+        value: "26",
+        label: "Riau",
+    },
+    {
+        value: "27",
+        label: "Sulawesi Barat",
+    },
+    {
+        value: "28",
+        label: "Sulawesi Selatan",
+    },
+    {
+        value: "29",
+        label: "Sulawesi Tengah",
+    },
+    {
+        value: "30",
+        label: "Sulawesi Tenggara",
+    },
+    {
+        value: "31",
+        label: "Sulawesi Utara",
+    },
+    {
+        value: "32",
+        label: "Sumatera Barat",
+    },
+    {
+        value: "33",
+        label: "Sumatera Selatan",
+    },
+    {
+        value: "34",
+        label: "Sumatera Utara",
+    },
+];

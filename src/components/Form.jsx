@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal } from "flowbite-react";
+import { Modal, Alert } from "flowbite-react";
 import SelectBox from "./partials/SelectBox";
 import SelectSearch from "react-select-search";
 import { cityList } from "../constanta";
@@ -178,6 +178,7 @@ const Form = () => {
     const [modalDom, setModalDom] = useState("");
     const [modalFollowers, setModalFollowers] = useState(0);
     const [modalWhatsapp, setModalWhatsapp] = useState(null);
+    const [failed, setFailed] = useState(false);
 
     useEffect(() => {
         const getCostumes = async () => {
@@ -219,9 +220,13 @@ const Form = () => {
             setIsLoading(true);
             const formEl = document.querySelector("#form");
             const formData = new FormData(formEl);
+            if (!city || !costume) {
+                setFailed(true);
+                setIsLoading(false);
+                return;
+            }
             formData.append("costume_id", costume.value);
             formData.append("city_id", city.value);
-
             const response = await axios.post(
                 `${FLASK_API_URL}${FLASK_PROCESS_URL}`,
                 formData
@@ -446,7 +451,18 @@ const Form = () => {
         <>
             <div className="min-h-screen" id="section2">
                 <form className="max-w-[80%] pt-20 mx-auto mt-4" id="form">
-                    <div className="mb-2">
+                    {failed ? (
+                        <Alert
+                            color="failure"
+                            onDismiss={() => setFailed(false)}
+                        >
+                            <span className="font-medium">Gagal!</span> Lengkapi
+                            data yang diperlukan.
+                        </Alert>
+                    ) : (
+                        ""
+                    )}
+                    <div className="my-2">
                         <span className="block font-medium mb-3">
                             Pilih bobot kepentingan setiap kriteria
                         </span>
