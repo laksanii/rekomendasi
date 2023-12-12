@@ -6,6 +6,7 @@ import Detail from "./components/Detail";
 import TambahData from "./components/Tambah";
 import About from "./components/About";
 import Update from "./components/Update";
+import Hasil from "./components/Hasil";
 
 function App() {
     return (
@@ -13,7 +14,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route
-                        path="jasa-sewa/:nama_jasa_sewa"
+                        path="/jasa-sewa/:nama_jasa_sewa"
                         element={<Detail />}
                     />
                     <Route
@@ -27,8 +28,9 @@ function App() {
                             </>
                         }
                     />
-                    <Route path="tambah-data" element={<TambahData />} />
-                    <Route path="update-data" element={<Update />} />
+                    <Route path="/tambah-data" element={<TambahData />} />
+                    <Route path="/update-data" element={<Update />} />
+                    <Route path="/hasil-kuesioner" element={<Hasil />} />
                 </Routes>
             </BrowserRouter>
         </>
