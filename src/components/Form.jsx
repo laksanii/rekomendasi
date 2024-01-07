@@ -172,6 +172,7 @@ const Form = () => {
     const [costume, setCostume] = useState(null);
     const [city, setCity] = useState(null);
     const [result, setResult] = useState([]);
+    const [withoutCostume, setWithoutCostume] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [modalName, setModalName] = useState("");
@@ -266,6 +267,8 @@ const Form = () => {
             setOptions(tempOption);
 
             setResult(merged.sort((a, b) => b.V - a.V));
+            setWithoutCostume(response.data.without_costume);
+            console.log(response.data.without_costume);
             console.log(merged.sort((a, b) => b.V - a.V));
             setIsLoading(false);
         } catch (error) {
@@ -696,6 +699,57 @@ const Form = () => {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {`${item["brand wig"]} (${item["kualitas wig"]})`}
+                                                </td>
+                                                <td className="py-4 text-center">
+                                                    {`Rp ${item[
+                                                        "ongkos kirim"
+                                                    ].toLocaleString("id-ID")}`}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {item["aksesoris dimiliki"]}
+                                                </td>
+                                                <td className="text-center py-4">
+                                                    {
+                                                        item[
+                                                            "pilihan jasa pengiriman"
+                                                        ]
+                                                    }
+                                                </td>
+                                                <td className="text-center py-4">
+                                                    {`${item[
+                                                        "jumlah followers instagram"
+                                                    ].toLocaleString("id-ID")}`}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                    {withoutCostume.map((item, index) => {
+                                        return (
+                                            <tr
+                                                key={index + result.length + 1}
+                                                className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                                            >
+                                                <td
+                                                    scope="col"
+                                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center dark:text-white"
+                                                >
+                                                    {index + result.length + 1}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <span className="cursor-pointer underline hover:text-slate-700">
+                                                        {item["jasa sewa"]}
+                                                    </span>
+                                                </td>
+                                                <td className="text-center py-4">
+                                                    {`Rp ${item[
+                                                        "ongkos kirim"
+                                                    ].toLocaleString("id-ID")}`}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {`${item["brand kostum"]}`}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {`${item["brand wig"]}`}
                                                 </td>
                                                 <td className="py-4 text-center">
                                                     {`Rp ${item[
